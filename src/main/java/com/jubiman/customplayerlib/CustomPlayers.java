@@ -26,10 +26,11 @@ public abstract class CustomPlayers<T extends CustomPlayer> {
 		} catch (NoSuchMethodException e) {
 			throw new RuntimeException(e);
 		}
+		init();
 	}
 
 	/**
-	 * Initialize event listener for ServerStopEvents
+	 * Initialize event listener for ServerStopEvents, no need to call super when overwriting.
 	 */
 	public void init() {
 		GameEvents.addListener(ServerStopEvent.class, new GameEventListener<ServerStopEvent>() {
@@ -38,7 +39,7 @@ public abstract class CustomPlayers<T extends CustomPlayer> {
 				stop();
 			}
 		});
-	};
+	}
 
 	/**
 	 * A null safe way to get a player from the map, adds player if they don't exist yet
@@ -72,7 +73,7 @@ public abstract class CustomPlayers<T extends CustomPlayer> {
 	}
 
 	/**
-	 * Save all players' data. Patches to call this method have to be created in the mod manually.
+	 * Save all players' data.
 	 * @param saveData the parent save object (usually ServerClient)
 	 */
 	public void save(SaveData saveData) {
@@ -84,7 +85,7 @@ public abstract class CustomPlayers<T extends CustomPlayer> {
 	}
 
 	/**
-	 * Load all players from saved data. Patches to call this method have to be created in the mod manually.
+	 * Load all players from saved data.
 	 * @param loadData data to load from (should be the same as where you save, usually ServerClient)
 	 */
 	public void load(LoadData loadData) {
