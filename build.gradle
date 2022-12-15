@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'java-library'
     id 'maven-publish'
 }
 
@@ -65,18 +64,46 @@ dependencies {
     implementation fileTree("./mods/") // Add all mods located in local mods folder
 }
 
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
 publishing {
     repositories {
         maven {
-            url 'http://jubiman.com/nexus/content/repositories/foo-releases'
+            name = "GitHubPackages"
+            url 'https://maven.pkg.github.com/jubiman/CustomPlayerLib'
             credentials {
-                username 'username'
-                password 'password'
+                username = githubUsername
+                password = githubToken
+            }
+        }
+        maven {
+            name = "OSSRH"
+            url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            credentials {
+                username = ossrhUsername
+                password = ossrhPassword
             }
         }
     }
+    publications {
+        /*gpr(MavenPublication) {
+            groupId 'com.jubiman'
+            artifactId 'customplayerlib'
+            from components.java
+            artifact javadocJar
+        }*/
+        maven(MavenPublication) {
+            groupId = 'com.jubiman'
+            artifactId = 'customplayerlib'
 
-    configurations.runtime.allDependencies.each {
+            from components.java
+            artifact javadocJar
+        }
+    }
+    /*configurations.runtime.allDependencies.each {
         def dep = it
         def file = file(configurations.runtime.find { it.name.startsWith("${dep.name}-${dep.version}") })
 
@@ -86,7 +113,7 @@ publishing {
             artifactId dep.name
             version dep.version
         })
-    }
+    }*/
 }
 
 task createAppID {

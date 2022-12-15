@@ -3,9 +3,5 @@ package com.jubiman.customplayerlib;
 import necesse.engine.modLoader.annotations.ModEntry;
 
 @ModEntry
-public class CustomPlayerLib {
-
-	public void init() {
-
-	}
+public class Main { // just so it's loaded to upload it to steam workshop
 }
