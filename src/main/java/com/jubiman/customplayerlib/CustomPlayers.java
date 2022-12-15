@@ -15,12 +15,16 @@ import java.util.Set;
 public abstract class CustomPlayers<T extends CustomPlayer> {
 	private final HashMap<Long, T> userMap = new HashMap<>();
 	private final Constructor<T> ctor;
+	protected final String name;
 
 	/**
 	 * Constructs the storage class for custom players
+	 *
 	 * @param clazz the class extending CustomPlayer
+	 * @param name the name of the class, used for creating a save component
 	 */
-	public CustomPlayers(Class<T> clazz) {
+	public CustomPlayers(Class<T> clazz, String name) {
+		this.name = name;
 		try {
 			this.ctor = clazz.getConstructor(long.class);
 		} catch (NoSuchMethodException e) {
@@ -77,7 +81,7 @@ public abstract class CustomPlayers<T extends CustomPlayer> {
 	 * @param saveData the parent save object (usually ServerClient)
 	 */
 	public void save(SaveData saveData) {
-		SaveData save = new SaveData("CUSTOMPLAYERDATA");
+		SaveData save = new SaveData(name);
 		for (T player : valueIterator())
 			player.addSaveData(save);
 
