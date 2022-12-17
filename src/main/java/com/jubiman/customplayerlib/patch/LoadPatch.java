@@ -11,8 +11,8 @@ import net.bytebuddy.asm.Advice;
  */
 @ModMethodPatch(target = ServerClient.class, name = "applySave", arguments = {LoadData.class})
 public class LoadPatch {
-	@Advice.OnMethodExit
-	static void onExit(@Advice.Argument(0) LoadData loadData) {
+	@Advice.OnMethodEnter
+	static void onEnter(@Advice.Argument(0) LoadData loadData) {
 		try {
 			CustomPlayerRegistry.loadAll(loadData);
 		} catch (Exception e) {
