@@ -89,12 +89,21 @@ public abstract class CustomPlayers<T extends CustomPlayer> {
 	}
 
 	/**
-	 * Load all players from saved data.
+	 * Load all players from saved data. Gets called before the rest of the player is loaded.
 	 * @param loadData data to load from (should be the same as where you save, usually ServerClient)
 	 */
-	public void load(LoadData loadData) {
+	public void loadEnter(LoadData loadData) {
 		for (LoadData data : loadData.getLoadData())
-			get(Long.parseLong(data.getName())).load(data);
+			get(Long.parseLong(data.getName())).loadEnter(data);
+	}
+
+	/**
+	 * Load all players from saved data. Gets called after the rest of the player is loaded.
+	 * @param loadData data to load from (should be the same as where you save, usually ServerClient)
+	 */
+	public void loadExit(LoadData loadData) {
+		for (LoadData data : loadData.getLoadData())
+			get(Long.parseLong(data.getName())).loadExit(data);
 	}
 
 	/**

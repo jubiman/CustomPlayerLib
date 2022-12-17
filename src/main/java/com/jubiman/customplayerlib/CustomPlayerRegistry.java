@@ -49,12 +49,21 @@ public class CustomPlayerRegistry {
 	}
 
 	/**
-	 * Loads all registered CustomPlayers
+	 * Loads all registered CustomPlayers, is called before the rest of the player is loaded
 	 * @param data the LoadData to load from
 	 */
-	public static void loadAll(LoadData data) {
+	public static void loadAllEnter(LoadData data) {
 		for (Map.Entry<String, CustomPlayers<?>> entry : registry.entrySet())
-			entry.getValue().load(data.getLoadDataByName(entry.getKey()).get(0));
+			entry.getValue().loadEnter(data.getLoadDataByName(entry.getKey()).get(0));
+	}
+
+	/**
+	 * Loads all registered CustomPlayers, is called after the rest of the player is loaded
+	 * @param data the LoadData to load from
+	 */
+	public static void loadAllExit(LoadData data) {
+		for (Map.Entry<String, CustomPlayers<?>> entry : registry.entrySet())
+			entry.getValue().loadExit(data.getLoadDataByName(entry.getKey()).get(0));
 	}
 
 	/**

@@ -14,7 +14,16 @@ public class LoadPatch {
 	@Advice.OnMethodEnter
 	static void onEnter(@Advice.Argument(0) LoadData loadData) {
 		try {
-			CustomPlayerRegistry.loadAll(loadData);
+			CustomPlayerRegistry.loadAllEnter(loadData);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Advice.OnMethodExit
+	static void onExit(@Advice.Argument(0) LoadData loadData) {
+		try {
+			CustomPlayerRegistry.loadAllExit(loadData);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

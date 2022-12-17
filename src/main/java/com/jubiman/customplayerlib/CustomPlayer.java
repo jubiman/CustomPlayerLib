@@ -25,8 +25,14 @@ public abstract class CustomPlayer {
 	public abstract void addSaveData(SaveData save);
 
 	/**
-	 * Load player's data from saved data
+	 * Load player's data from saved data. Gets called before the rest of the player is loaded.
 	 * @param data the data to load
 	 */
-	public abstract void load(LoadData data);
+	public abstract void loadEnter(LoadData data);
+
+	/**
+	 * Load player's data from saved data. Gets called before the rest of the player is loaded.
+	 * @param data the data to load
+	 */
+	public abstract void loadExit(LoadData data);
 }
