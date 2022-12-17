@@ -32,13 +32,8 @@ public abstract class CustomPlayers<T extends CustomPlayer> {
 		} catch (NoSuchMethodException e) {
 			throw new RuntimeException(e);
 		}
-		init();
-	}
 
-	/**
-	 * Initialize event listener for ServerStopEvents, no need to call super when overwriting.
-	 */
-	public void init() {
+		// Initialize event listener for ServerStopEvents, no need to call super when overwriting.
 		GameEvents.addListener(ServerStopEvent.class, new GameEventListener<ServerStopEvent>() {
 			@Override
 			public void onEvent(ServerStopEvent e) {
@@ -101,7 +96,7 @@ public abstract class CustomPlayers<T extends CustomPlayer> {
 	 */
 	public void loadEnter(LoadData loadData) {
 		LoadData data = loadData.getLoadData().get(0);
-		get(data.getLong("auth")).loadEnter(data);
+		get(Long.parseLong(data.getName())).loadEnter(data);
 	}
 
 	/**
@@ -110,7 +105,7 @@ public abstract class CustomPlayers<T extends CustomPlayer> {
 	 */
 	public void loadExit(LoadData loadData) {
 		LoadData data = loadData.getLoadData().get(0);
-		get(data.getLong("auth")).loadEnter(data);
+		get(Long.parseLong(data.getName())).loadEnter(data);
 	}
 
 	/**

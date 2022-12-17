@@ -22,9 +22,7 @@ public abstract class CustomPlayer {
 	 * Save the player's data
 	 * @param save save parent object to add to
 	 */
-	public void addSaveData(SaveData save) {
-		save.addLong("auth", auth);
-	}
+	public abstract void addSaveData(SaveData save);
 
 	/**
 	 * Load player's data from saved data. Gets called before the rest of the player is loaded.
