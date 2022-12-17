@@ -3,6 +3,7 @@ package com.jubiman.customplayerlib;
 import com.jubiman.customplayerlib.tick.ITickable;
 import necesse.engine.network.client.Client;
 import necesse.engine.network.server.Server;
+import necesse.engine.network.server.ServerClient;
 import necesse.engine.save.LoadData;
 import necesse.engine.save.SaveData;
 
@@ -40,12 +41,13 @@ public class CustomPlayerRegistry {
 	}
 
 	/**
-	 * Saves all registered CustomPlayers
+	 * Saves player data from all registered CustomPlayers classes
 	 * @param save the SaveData to save to
+	 * @param player the player to save
 	 */
-	public static void saveAll(SaveData save) {
+	public static void saveAll(SaveData save, ServerClient player) {
 		for (CustomPlayers<?> cps : registry.values())
-			cps.save(save);
+			cps.save(save, player);
 	}
 
 	/**

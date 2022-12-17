@@ -12,7 +12,7 @@ import net.bytebuddy.asm.Advice;
 @ModMethodPatch(target = ServerClient.class, name = "getSave", arguments = {})
 public class SavePatch {
 	@Advice.OnMethodExit
-	static void onExit(@Advice.Return(readOnly = false) SaveData save) {
-		CustomPlayerRegistry.saveAll(save);
+	static void onExit(@Advice.This ServerClient self, @Advice.Return(readOnly = false) SaveData save) {
+		CustomPlayerRegistry.saveAll(save, self);
 	}
 }

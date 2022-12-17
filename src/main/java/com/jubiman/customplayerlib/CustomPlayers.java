@@ -2,7 +2,9 @@ package com.jubiman.customplayerlib;
 
 import necesse.engine.GameEventListener;
 import necesse.engine.GameEvents;
+import necesse.engine.events.ServerClientDisconnectEvent;
 import necesse.engine.events.ServerStopEvent;
+import necesse.engine.network.server.ServerClient;
 import necesse.engine.save.LoadData;
 import necesse.engine.save.SaveData;
 
@@ -43,6 +45,12 @@ public abstract class CustomPlayers<T extends CustomPlayer> {
 				stop();
 			}
 		});
+		GameEvents.addListener(ServerClientDisconnectEvent.class, new GameEventListener<ServerClientDisconnectEvent>() {
+			@Override
+			public void onEvent(ServerClientDisconnectEvent e) {
+				userMap.remove(e.client.authentication);
+			}
+		});
 	}
 
 	/**
@@ -77,33 +85,32 @@ public abstract class CustomPlayers<T extends CustomPlayer> {
 	}
 
 	/**
-	 * Save all players' data.
+	 * Save player's data.
 	 * @param saveData the parent save object (usually ServerClient)
+	 * @param player the player to save
 	 */
-	public void save(SaveData saveData) {
+	public void save(SaveData saveData, ServerClient player) {
 		SaveData save = new SaveData(name);
-		for (T player : valueIterator())
-			player.addSaveData(save);
-
+		get(player.authentication).addSaveData(save);
 		saveData.addSaveData(save);
 	}
 
 	/**
-	 * Load all players from saved data. Gets called before the rest of the player is loaded.
+	 * Load player from saved data. Gets called before the rest of the player is loaded.
 	 * @param loadData data to load from (should be the same as where you save, usually ServerClient)
 	 */
 	public void loadEnter(LoadData loadData) {
-		for (LoadData data : loadData.getLoadData())
-			get(Long.parseLong(data.getName())).loadEnter(data);
+		LoadData data = loadData.getLoadData().get(0);
+		get(data.getLong("auth")).loadEnter(data);
 	}
 
 	/**
-	 * Load all players from saved data. Gets called after the rest of the player is loaded.
+	 * Load player from saved data. Gets called after the rest of the player is loaded.
 	 * @param loadData data to load from (should be the same as where you save, usually ServerClient)
 	 */
 	public void loadExit(LoadData loadData) {
-		for (LoadData data : loadData.getLoadData())
-			get(Long.parseLong(data.getName())).loadExit(data);
+		LoadData data = loadData.getLoadData().get(0);
+		get(data.getLong("auth")).loadEnter(data);
 	}
 
 	/**
