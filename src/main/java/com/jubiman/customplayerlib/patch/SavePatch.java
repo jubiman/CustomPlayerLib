@@ -6,6 +6,9 @@ import necesse.engine.network.server.ServerClient;
 import necesse.engine.save.SaveData;
 import net.bytebuddy.asm.Advice;
 
+/**
+ * Saves all CustomPlayers
+ */
 @ModMethodPatch(target = ServerClient.class, name = "getSave", arguments = {})
 public class SavePatch {
 	@Advice.OnMethodExit

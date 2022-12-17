@@ -10,7 +10,6 @@ public abstract class CustomPlayer {
 		this.auth = auth;
 	}
 
-
 	/**
 	 * Creates new save component
 	 * @return a SaveData component with name of the player's auth
