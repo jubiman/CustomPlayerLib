@@ -11,16 +11,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
+/**
+ * Registry where mods can register CustomPlayers
+ */
 public class CustomPlayerRegistry {
-	private static final HashMap<String, CustomPlayers<? extends CustomPlayer>> registry = new HashMap<>();
+	private static final HashMap<String, CustomPlayersHandler<? extends CustomPlayer>> registry = new HashMap<>();
 
 	/**
 	 * Register a new CustomPlayers instance
 	 * @param identifier the name of the class (used to return the instance)
-	 * @param customPlayersInstance a new instance of the class
+	 * @param customPlayersHandlerInstance a new instance of the class
 	 */
-	public static void register(String identifier, CustomPlayers<?> customPlayersInstance) {
-		registry.put(identifier, customPlayersInstance);
+	public static void register(String identifier, CustomPlayersHandler<?> customPlayersHandlerInstance) {
+		registry.put(identifier, customPlayersHandlerInstance);
 	}
 
 	/**
@@ -28,7 +31,7 @@ public class CustomPlayerRegistry {
 	 * @param identifier the identifier of the CustomPlayers
 	 * @return CustomPlayers instance registered with the identifier
 	 */
-	public static CustomPlayers<?> get(String identifier) {
+	public static CustomPlayersHandler<?> get(String identifier) {
 		return registry.get(identifier);
 	}
 
@@ -36,7 +39,7 @@ public class CustomPlayerRegistry {
 	 * Applies forEach function on the registry HasMap
 	 * @param action the function to execute
 	 */
-	public static void forEach(BiConsumer<? super String, ? super CustomPlayers<?>> action) {
+	public static void forEach(BiConsumer<? super String, ? super CustomPlayersHandler<?>> action) {
 		registry.forEach(action);
 	}
 
@@ -46,7 +49,7 @@ public class CustomPlayerRegistry {
 	 * @param player the player to save
 	 */
 	public static void saveAll(SaveData save, ServerClient player) {
-		for (CustomPlayers<?> cps : registry.values())
+		for (CustomPlayersHandler<?> cps : registry.values())
 			cps.save(save, player);
 	}
 
@@ -55,7 +58,7 @@ public class CustomPlayerRegistry {
 	 * @param data the LoadData to load from
 	 */
 	public static void loadAllEnter(LoadData data) {
-		for (Map.Entry<String, CustomPlayers<?>> entry : registry.entrySet())
+		for (Map.Entry<String, CustomPlayersHandler<?>> entry : registry.entrySet())
 			entry.getValue().loadEnter(data.getLoadDataByName(entry.getKey()).get(0));
 	}
 
@@ -64,7 +67,7 @@ public class CustomPlayerRegistry {
 	 * @param data the LoadData to load from
 	 */
 	public static void loadAllExit(LoadData data) {
-		for (Map.Entry<String, CustomPlayers<?>> entry : registry.entrySet())
+		for (Map.Entry<String, CustomPlayersHandler<?>> entry : registry.entrySet())
 			entry.getValue().loadExit(data.getLoadDataByName(entry.getKey()).get(0));
 	}
 
@@ -73,7 +76,7 @@ public class CustomPlayerRegistry {
 	 * @param server the server to tick from
 	 */
 	public static void serverTickAll(Server server) {
-		for (CustomPlayers<?> cps : registry.values())
+		for (CustomPlayersHandler<?> cps : registry.values())
 			if (cps instanceof ITickable)
 				((ITickable) cps).serverTick(server);
 	}
@@ -83,7 +86,7 @@ public class CustomPlayerRegistry {
 	 * @param client the client to tick from
 	 */
 	public static void clientTickAll(Client client) {
-		for (CustomPlayers<?> cps : registry.values())
+		for (CustomPlayersHandler<?> cps : registry.values())
 			if (cps instanceof ITickable)
 				((ITickable) cps).clientTick(client);
 	}

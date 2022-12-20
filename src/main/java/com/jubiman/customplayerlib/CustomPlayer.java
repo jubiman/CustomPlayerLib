@@ -3,9 +3,19 @@ package com.jubiman.customplayerlib;
 import necesse.engine.save.LoadData;
 import necesse.engine.save.SaveData;
 
+/**
+ * The instance of each individual player containing custom data
+ */
 public abstract class CustomPlayer {
+	/**
+	 * The authentication of the player, used to access this object in the CustomPlayers registry
+	 */
 	protected final long auth;
 
+	/**
+	 * Creates new CustomPlayer
+	 * @param auth the authentication of the player
+	 */
 	public CustomPlayer(long auth) {
 		this.auth = auth;
 	}

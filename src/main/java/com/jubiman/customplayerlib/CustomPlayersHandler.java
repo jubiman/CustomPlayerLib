@@ -14,9 +14,16 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Set;
 
-public abstract class CustomPlayers<T extends CustomPlayer> {
+/**
+ * Handler for handling custom players in your mod
+ * @param <T> your CustomPlayer class
+ */
+public abstract class CustomPlayersHandler<T extends CustomPlayer> {
 	private final HashMap<Long, T> userMap = new HashMap<>();
 	private final Constructor<T> ctor;
+	/**
+	 * The name of the handler (usually tied to the mod name)
+	 */
 	protected final String name;
 
 	/**
@@ -25,7 +32,7 @@ public abstract class CustomPlayers<T extends CustomPlayer> {
 	 * @param clazz the class extending CustomPlayer
 	 * @param name the name of the class, used for creating a save component
 	 */
-	public CustomPlayers(Class<T> clazz, String name) {
+	public CustomPlayersHandler(Class<T> clazz, String name) {
 		this.name = name;
 		try {
 			this.ctor = clazz.getConstructor(long.class);

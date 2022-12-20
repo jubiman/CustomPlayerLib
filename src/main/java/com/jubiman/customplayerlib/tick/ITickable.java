@@ -3,6 +3,9 @@ package com.jubiman.customplayerlib.tick;
 import necesse.engine.network.client.Client;
 import necesse.engine.network.server.Server;
 
+/**
+ * Specifies that the CustomPlayer(sHandler) is tickable
+ */
 public interface ITickable {
 	/**
 	 * Performs a server tick

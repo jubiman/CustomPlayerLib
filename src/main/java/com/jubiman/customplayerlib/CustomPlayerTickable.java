@@ -4,7 +4,14 @@ import com.jubiman.customplayerlib.tick.ITickable;
 import necesse.engine.network.client.Client;
 import necesse.engine.network.server.Server;
 
+/**
+ * The tickable variant of a CustomPlayer. Ticks are automatically called, no need for patches
+ */
 public abstract class CustomPlayerTickable extends CustomPlayer implements ITickable {
+	/**
+	 * Creates new tickable CustomPlayer
+	 * @param auth the authentication of the player
+	 */
 	public CustomPlayerTickable(long auth) {
 		super(auth);
 	}

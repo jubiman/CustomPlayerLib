@@ -4,13 +4,17 @@ import com.jubiman.customplayerlib.tick.ITickable;
 import necesse.engine.network.client.Client;
 import necesse.engine.network.server.Server;
 
-public class CustomPlayersTickable<T extends CustomPlayerTickable> extends CustomPlayers<T> implements ITickable {
+/**
+ * A tickable variant of the CustomPlayersHandler
+ * @param <T> your CustomPlayerTickable class
+ */
+public class CustomPlayersHandlerTickable<T extends CustomPlayerTickable> extends CustomPlayersHandler<T> implements ITickable {
 	/**
 	 * Constructs the tickable storage class for custom players
 	 * @param clazz the class extending CustomPlayer
 	 * @param name  the name of the class, used for creating a save component
 	 */
-	public CustomPlayersTickable(Class<T> clazz, String name) {
+	public CustomPlayersHandlerTickable(Class<T> clazz, String name) {
 		super(clazz, name);
 	}
 
