@@ -112,7 +112,7 @@ public abstract class CustomPlayersHandler<T extends CustomPlayer> {
 	 */
 	public void loadExit(LoadData loadData) {
 		LoadData data = loadData.getLoadData().get(0);
-		get(Long.parseLong(data.getName())).loadEnter(data);
+		get(Long.parseLong(data.getName())).loadExit(data);
 	}
 
 	/**
